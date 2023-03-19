@@ -18,7 +18,9 @@ def run():
         print("Não consegui abrir a câmera!")
         exit()
 
-    matriz_rotacao = np.array([[0.7, -0.7, 0], [0.7, 0.7, 0], [0, 0,1]])
+    matriz_de_rotacao = np.eye(3)
+    rodando = False
+
     # Esse loop é igual a um loop de jogo: ele encerra quando apertamos 'q' no teclado.
     while True:
         # Captura um frame da câmera
@@ -41,35 +43,44 @@ def run():
 
         # rotacionar a imagem
         image_ = np.zeros_like(image)
-
-        Xd = criar_indices(0, 300, 0, 300)
+        Xd = criar_indices(0, image.shape[0], 0, image.shape[1])
         Xd = np.vstack ( (Xd, np.ones( Xd.shape[1]) ) )
+        T = np.array([[1, 0, -(image.shape[0]/2)], [0, 1, -(image.shape[1]/2)], [0, 0,1]])
+        T2 = np.array([[1, 0, image.shape[0]/2], [0, 1, image.shape[1]/2], [0, 0,1]])
 
-        T = np.array([[1, 0, -150], [0, 1, -150], [0, 0,1]])
-        T2 = np.array([[1, 0, 150], [0, 1, 150], [0, 0,1]])
+        R = np.array([[np.cos(np.pi/18), -np.sin(np.pi/18), 0], [np.sin(np.pi/18), np.cos(np.pi/18), 0], [0, 0,1]])
 
-        R = np.array([[0.7, -0.7, 0], [0.7, 0.7, 0], [0, 0,1]])
-
-        A  = T2 @ R @ T
+        A  = T2 @ matriz_de_rotacao @ T
         X = np.linalg.inv(A)  @  Xd
 
         Xd = Xd.astype(int)
         X = X.astype(int)
 
         # Troque este código pelo seu código de filtragem de pixels
-        Xd[0,:] = np.clip(Xd[0,:], 0, image.shape[0])
-        Xd[1,:] = np.clip(Xd[1,:], 0, image.shape[1])
+        filtro = (X[0,:]>=0)&(X[0,:]<image.shape[0])&(X[1,:]>=0)&(X[1,:]<image.shape[1])
+        Xd = Xd[:,filtro]
+        X = X[:,filtro]
 
         image_[Xd[0,:], Xd[1,:], :] = image[X[0,:], X[1,:], :]
 
         # Se aperto 'q', encerro o loop
-        if cv.waitKey(1) == ord('q'):
+        cv.imshow('Minha Imagem!', image_)
+        k = cv.waitKey(1)
+        if k == ord('q'):
             break
 
-        if cv.waitKey(1) == ord('m'):
-            R = matriz_rotacao @ R
+        elif k == ord('m'):
+            rodando =  not rodando
+        
+
+        if rodando:
+            matriz_de_rotacao = R @ matriz_de_rotacao
+
+        
+        
     # Ao sair do loop, vamos devolver cuidadosamente os recursos ao sistema!
     cap.release()
     cv.destroyAllWindows()
 
-run()
+if __name__ == '__main__':
+    run()
