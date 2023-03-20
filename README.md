@@ -22,8 +22,18 @@ Para utilizar o programa, basta seguir os passos abaixo:
 
 5. Por fim basta rodar o arquivo "demo.py". Após fazer isso, sua câmera irá aparecer em sua tela. Para iniciar o efeito basta apertar a tecla "M" de seu telcado, e para paralo basta apertala de novo. Para finalizar o programa aperte a tecla "Q".
 
-## Funções:
+## Efeito
 
-### Função funcoes(mensagem):
-Este é um arquivo em que possue uma funcão "criar-indices"
+### Como funciona:
+    O processo para gerar o efeito de rotação da camera acontece em alguns passo.
+    
+    1. É realizado uma translação na matriz que representa os pontos da imagem. Essa matriz tem como objetivo mover a imagem para o ponto de origem (0,0).
+    
+    2. É realizado uma rotação através de matrizes com o objetivo de rotacionar a imagem no aângulo desejado.
+    
+    3. É realizado uma outro transalção através de matrizes, porém dessa vez de voltar a posicao de nossa imagem ao ponto inicial. Para isso é necessario mulitplicão pelo inverso da mateiz do passo 1.
+    
+    4. Por fim são aplicados filtros, para que assim não tenham falhas nas imagens devidos a pixeis perdidos.
+   
+
 
