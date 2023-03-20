@@ -29,11 +29,11 @@ Para utilizar o programa, basta seguir os passos abaixo:
     
     1. É realizado uma translação na matriz que representa os pontos da imagem. Essa matriz tem como objetivo mover a imagem para o ponto de origem (0,0).
     
-    2. É realizado uma rotação através de matrizes com o objetivo de rotacionar a imagem no aângulo desejado.
+    2. É realizado uma rotação através de matrizes com o objetivo de rotacionar a imagem no ângulo desejado.
     
-    3. É realizado uma outro transalção através de matrizes, porém dessa vez de voltar a posicao de nossa imagem ao ponto inicial. Para isso é necessario mulitplicão pelo inverso da mateiz do passo 1.
+    3. É realizado uma outra transalção através de matrizes, porém dessa vez com a intenção de voltar a posicao de nossa imagem ao ponto inicial. Para isso é necessario mulitplicão pelo inverso da mateiz do passo 1.
     
-    4. Por fim são aplicados filtros, para que assim não tenham falhas nas imagens devidos a pixeis perdidos.
+    4. Por fim são aplicados filtros, para que assim não tenham falhas nas imagens.
    
 
 
